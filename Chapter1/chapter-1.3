@@ -1,4 +1,4 @@
-### 1. NetworkCore
+# 1. NetworkCore
 
 end-system끼리 연결시켜주는 networkCore에 대해 알아봅시다~
 
@@ -7,4 +7,109 @@ end-system끼리 연결시켜주는 networkCore에 대해 알아봅시다~
 
 
 <img src="/Users/ju/Documents/top-down-approach-network/Chapter1/resource/IMG_F07B16A6D0E8-1.jpeg" alt="IMG_F07B16A6D0E8-1" style="zoom:40%;" />
+
+
+
+## 1.3.1 Packet Switching
+
+* packet switch와 packet switching은 다른 의미네요.
+* packet switch는 router, switch처럼 패킷을 전달해주는 device를 의미합니다. packet switching은 그 작업을 의미하구요.
+
+
+
+네트워크의 application들은 messages를 서로 주고 받습니다. messages는 어떤 것이든 될 수 있구요.
+
+source -> destination으로 보내기 위해선 packet이라는 단위로 쪼개서 보내야 합니다! 이 packet은 communication link(광섬유, 구리선...) ~ packet switches를 돌아다니죠.
+
+
+
+데이터 보내는 속도는 **link의 최대 전송률(transmission rate)**을 따릅니다~ 따라서, 보낼 packet의 bit크기가 L bits 이고, 전송률이 초당 R bits면 packet을 보내는 시간은  L/R sec가 되겠습니다~
+
+> 헉, 패킷 스위치에 달린게 아니라 link에 달려 있구낭.. 그런데 한편으로는 라우터에서 1gbps가 아니라 100mbps 랜선지원해주는게 있던뎅. 라우터가 지원해줘야할 듯!
+
+### Store-and-Forward Transmission
+
+대부분의 packet switch는 links에 packet을 집어넣을 때, buffer가 존재합니다. 한 패킷을 모두 받아야만 그때서야 전송하죠!
+
+
+
+Source ---- packet switch ----- Destination
+
+
+
+#### 속도 계산 문제
+
+##### Q. S -> D까지 L bits 패킷 1개를 처음으로 전달할 때 얼마나 걸릴까요?
+
+**가정**
+
+* 전송 딜레이 없음
+* link에서 즉시 전송
+
+위처럼 구성되어 있고, source에서 link를 통해 패킷 스위치에 보내는 전송률이 R bits/sec 라면,
+
+1. 첫 패킷이 패킷 스위치에 모두 전송될 때까지 L/R sec 소요
+2. 모두 전송되었으므로 이 직후에서야 데이터를 받음
+
+
+
+모두 전송될 때까지는 2L/R sec 소요
+
+
+
+##### Q. 3개의 패킷을 모두 보내는데는?
+
+4L/R sec
+
+첫번 째꺼 보낼 때 두번째꺼 전송받고 있음.
+
+
+
+### Queuing Delays and Packet Loss
+
+#### output buffer
+
+각각 패킷 스위치에 연결된 link마다 ouput buffer(output queue)를 지니고 있습니다. 이 버퍼의 역할은 전송할 패킷을 보관하는 역할을 하죠. 이것이 바로 패킷 스위치에서 중요한 역할을 맡습니다!
+
+패킷 스위치에서 한 링크의 전송률이 15Mbps고, 이 link로 A,B Source에 연결된 link에서 비트를 100mbps로 받는다고 생각해보세요.
+
+output buffer를 소비하는 속도가 못따라가니 output buffer가 점점 차겠죠?
+
+##### output buffer에 패킷이 존재할 때 나올 수 있는 상황
+
+* 도착하는 패킷은 버퍼에서 **기다릴 수 밖에** 없죠. 
+
+  앞 패킷이 모두 전송되어야 하니, 자기보다 앞선 패킷의 데이터 크기 / R sec가 **queuing delay**가 될 수 있습니다!
+
+* 버퍼가 **꽉 차** 있을 수도 있습니다!
+
+  방금 도착한 **패킷이 손실**되거나 큐 안의 패킷이 손실될 수 있습니다. ㄷ ㄷ ㄷ
+
+
+
+> congestion: 패킷이 큐에 대기해야하는 상태. 교통 혼잡 생각하면 될 듯! 혼잡하다 -> 기다려야 한다잖어~
+
+
+
+### Forwarding Tables and Routing Protocols
+
+와나~ 패킷 스위치가 패킷을 받으면 어떻게 어떤 output link로 전달할지 알까?! How does the router determine which link it should forward the packet onto?
+
+결론: 컴퓨터 네트워크 타입마다 다르게 포워딩함. ㄷㄷ
+
+#### Internet
+
+모든 end system이 IP address가지고 있음. 따라서 S(source)가 D(destination)의 IP주소를 패킷 header에 작성함.
+
+우편 주소처럼 계층적 구조를 지닙니다. (홀링?)
+
+패킷이 network에 있는 라우터에 도착하면 이 라우터는 packet에서 D를 보고는 인근 라우터로 넘겨줍니다! 다시 말해서, **라우터마다 forwarding table을 지니게 되죠!**
+
+forwarding table의 값은 D의 주소에 맞는 router의 outbound link로 맵핑시켜주도록 구성되어 있습니다. 즉, D의 ip 주소가 indexing역할을 합니다.
+
+
+
+아뉘~ 어떻게 table 구성하냐고~~ 는 감칠맛나게 Chapter5에서 설명해준답니다.ㅜ 더욱 자세한 내용은 Chapter5에서!
+
+
 
