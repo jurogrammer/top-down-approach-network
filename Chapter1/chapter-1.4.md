@@ -31,7 +31,7 @@ packet switching 및 computer networks를 정확히 이해하기 위해서는 �
 
 ### Types of Delay
 
-<img src="/Users/ju/Documents/top-down-approach-network/Chapter1/resource/figure 1.16 the nodal delay at router A.png" alt="figure 1.16 the nodal delay at router A" style="zoom:67%;" />
+<img width="334" alt="figure 1 16 the nodal delay at router A" src="https://user-images.githubusercontent.com/57349658/114261301-c6c8bd80-9a14-11eb-8fab-bfa16229bc58.png">
 
 
 
@@ -136,7 +136,7 @@ N개의 패킷이 (L/R)N seconds 마다 큐에 도착한다고 보면, 마지막
 
 
 
-<img src="/Users/ju/Library/Application Support/typora-user-images/스크린샷 2021-04-10 오후 2.22.48.png" alt="스크린샷 2021-04-10 오후 2.22.48" style="zoom:66%;" />
+<img width="359" alt="figure 1 18 Dependence of average queuing delay on traffic intensity" src="https://user-images.githubusercontent.com/57349658/114261310-d0522580-9a14-11eb-80a8-875129cfaafa.png">
 
 
 
@@ -222,7 +222,7 @@ average throughput = F/T bits/sec
 
 이 평균 처리량에 영향을 주는 요소가 무엇이 있을까요?
 
-<img src="/Users/ju/Library/Application Support/typora-user-images/스크린샷 2021-04-10 오후 3.39.41.png" alt="스크린샷 2021-04-10 오후 3.39.41" style="zoom:67%;" />
+<img width="338" alt="figure 1 19 Throughput for a file transfer from server to client" src="https://user-images.githubusercontent.com/57349658/114261318-d6e09d00-9a14-11eb-93af-bde7f0f78e8e.png">
 
 이 그림을 볼게요.
 
@@ -240,7 +240,7 @@ Figure b의 평균 처리량은 min{R1,R2....RN}이 되겠죠.
 
 현대의 네트워크
 
-<img src="/Users/ju/Documents/top-down-approach-network/Chapter1/resource/Figure 1.20 End-to-end throught.png" alt="Figure 1.20 End-to-end throught" style="zoom:67%;" />
+![Uploading Figure 1.20 End-to-end throught.png…]()
 
 
 
