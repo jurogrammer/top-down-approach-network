@@ -240,7 +240,7 @@ Figure b의 평균 처리량은 min{R1,R2....RN}이 되겠죠.
 
 현대의 네트워크
 
-![Uploading Figure 1.20 End-to-end throught.png…]()
+<img width="278" alt="Figure 1 20 End-to-end throught" src="https://user-images.githubusercontent.com/57349658/114261331-ecee5d80-9a14-11eb-9c81-2e7ea5381e4d.png">
 
 
 
