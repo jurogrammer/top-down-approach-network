@@ -171,3 +171,48 @@ packet switching에서 특정 시간에 1명의 유저가 패킷 보낼 확률�
 > 35명의 유저 중 x명이 동시에 사용할 확률 => 35Cx(0.1)^x(0.9)^(35-x)<img src="/Users/ju/Documents/top-down-approach-network/Chapter1/resource/스크린샷 2021-04-06 오후 9.54.26.png" alt="스크린샷 2021-04-06 오후 9.54.26" style="zoom: 67%;" />
 
 그래서 35명일 때 동시에 10명이하가 쉽게 사용할 수 있는 확률이 0.9996이라는 계산이 나오죠! 35명이 쓸수 있다는 얘기네용.
+
+ 
+
+## 1.3.3 A Network of Networks
+
+ISP를 통해서 end system이 연결된다고 배웠죠? 이번에는 ISP가 어떻게 구성되어 있는지 알아보자는 겁니다.
+
+ISP를 KT,SKT 등으로 생각할 수도 있지만, 작게는 학교, 회사로도 볼 수 있어요! 거기에 연결된 컴퓨터가 인터넷을 쓸 수 있잖아요?
+
+### 대빵(tier-1) ISP
+
+그런데 그런 ISP들이 서로 다 연결하려고 해봐요;  ISP가 한 둘이 아닐텐데 거기에 다 연결해야 한다니... 엄청난 비용이 아닐 수가 없죠?
+
+그래서 생각할 수 있는 구조가 facade패턴마냥 모두 연결되어 있는 대빵 ISP가 있다고 보는 거에요.
+
+대빵 ISP가 모두 연결하려고 비용을 얼마나 투자했겠어요. 당연히 돈 받아내겠죠. 여기서 provider, customer관계가 생깁니다.
+
+
+
+### regional ISP
+
+현실적으로 대빵 ISP가 어떻게 모두 연결되어 있겠어요; 각 나라마다 기지국을 다 가지고 있을까요. 아닙니당. 그래서 보통 regional ISP가 존재하고, 그 regional ISP가 대빵 ISP랑 연결되어 있는 형태이지요.
+
+계층적으로 구성되어 있어요.
+
+
+
+더 나아가서, 대빵 ISP가 하나만 있진 않습니다. 그리고 얘네들끼리 연결되어 있는 구조이지요.
+
+
+
+### IXP
+
+대빵보다 아래에 있는 ISP_a, ISP_b가 있다고 봅시다. 얘네들이 대빵들 통해서 연결되면 돈 받으니깐 서로 직접적으로 연결되길 바랄 수 있겠죠? 그래서 IXP라는 것이 등장합니다. Internet Exchange Point라고 해서 서로 연결될 수 있도록 도와주는 것이지요.
+
+
+
+### Content-provider network
+
+마지막으로는 content-provider network라는 것이 등장합니다. 데이터를 제공해주는 업체?인가봐요. 자세한 설명은 안되어 있네요. 현재는 이 content-provider network와 모두 연결되어 있다고 합니다.
+
+그래서 구조는 다음과 같습니다.
+
+<img src="/Users/ju/Documents/top-down-approach-network/Chapter1/resource/스크린샷 2021-04-10 오후 12.25.53.png" alt="스크린샷 2021-04-10 오후 12.25.53" style="zoom:50%;" />
+
