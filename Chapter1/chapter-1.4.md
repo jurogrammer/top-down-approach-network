@@ -208,3 +208,48 @@ wifi나 모뎀같은 곳으로 패킷을 보내는데 기다릴 수 있구요(�
 
 
 
+
+
+
+
+### 1.4.4 Throughput in Computer Networks
+
+End - to - End 간 데이터 처리율 관점에서 살펴볼게요. 처리량이 뭐냐구요? 파일을 전송합니다. 보통 초당 얼마나 보내지는지 표시가 되잖아요? 이 처리량에 대해 알아보자는 겁니다.평균 처리량은 파일의 크기 F, 호스트 A에서 B로 전송하는데 걸리는 시간 T를 나누 값 F/T가 되겠습니다.
+
+```
+average throughput = F/T bits/sec
+```
+
+이 평균 처리량에 영향을 주는 요소가 무엇이 있을까요?
+
+<img src="/Users/ju/Library/Application Support/typora-user-images/스크린샷 2021-04-10 오후 3.39.41.png" alt="스크린샷 2021-04-10 오후 3.39.41" style="zoom:67%;" />
+
+이 그림을 볼게요.
+
+Rs는 server -> router link의 전송률, Rc는 router -> client link의 전송률을 의미합니다.
+
+아무리 Rs가 높더라도 Rc가 낮다면 결국 Rc를 따르게 되겠죠?  그리고 Rc가 아무리 높더라도 Rs가 낮으면 Rs를 따르겠죠. 따라서 결국 처리율은 min{Rs,Rc}가 되겠죠.
+
+그래서 예상 시간 T = F/min{Rs,Rc}라 할수도 있겠습니다.
+
+
+
+Figure b의 평균 처리량은 min{R1,R2....RN}이 되겠죠.
+
+
+
+현대의 네트워크
+
+<img src="/Users/ju/Documents/top-down-approach-network/Chapter1/resource/Figure 1.20 End-to-end throught.png" alt="Figure 1.20 End-to-end throught" style="zoom:67%;" />
+
+
+
+a는 뭐 동일한데요, b도 살펴봐야 합니다.
+
+common link라는게 존재하나봐요. 그래서 이녀석의 전송률도 고려해야 합니다. 
+
+Rs = 2Mbps, Rc =1 Mbps 이고 common link의 R = 5 Mbps라고 할게요. 10개의 서버가 10개의 클라이언트에게 데이터를 보낸다고 하면 어떻게 될까요?
+
+균등하게 전송률을 나눈다는 가정하에 평균 처리량은 500kbps가 되게 됩니다. 5 Mbps를 10개로 나눠가지니까요.
+
+그래서 아무리 전송률이 높은 link가 있다하더라도, 이게 Bottleneck link가 될 수 있습니다.
