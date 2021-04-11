@@ -183,3 +183,31 @@ frame에 있는 **각 bit**를 다른 노드로 넘겨주는 역할을 합니다
 
 
 
+
+
+## 1.5.2 Encapsulation
+
+![figure 1.24 encapsulation](/Users/ju/Documents/top-down-approach-network/Chapter1/resource/figure 1.24 encapsulation.png)
+
+encapsulation은 이 그림으로 끝입니당.
+
+맨 왼쪽 위를 보시면 Application에서 만든 Message가 있는데, Transport layer에서 자신의 프로토콜을 담아 message에 header를 붙입니다. 바로 메세지를 캡슐화하는 것이죠. 이런식으로 아래 Frame에선 Segment, Datagram의 프로토콜을 지니게 됩니다. 
+
+
+
+Link-layer switch는 source처럼 모든 프로토콜을 굳이 다 구현할 필요 없겠죠? 자신에 맞는 link layer protocol만 알면 되니까요. 데이터를 link layer까지 전달받기 위해서는 physical layer가 구현되어 있어 datagram을 link layer에게 전달할 수 있어야 겠지요?
+
+즉, 특정 layer에서 통신하려면 하위 레이어의 프로토콜을 알고 있어야 특정 layer까지 전달할 수 있겠죠.
+
+
+
+한편으로 여기서 해당 레이어에 다른 헤더 외의 데이터를 payload라 부릅니다. 예를 들어 Network Layer의 패킷인 HnHtM에서 HtM이 payload가 되는 것이죠.
+
+
+
+capsulation은 실제로는 구현이 좀 더 복잡할 수 있습니다. Transport Layer에서 TCP를 사용할 경우엔 Message를 분해하여 각각 transport layer의 header를 붙이거든요~ 알아두시면 됩니당.
+
+
+
+
+
