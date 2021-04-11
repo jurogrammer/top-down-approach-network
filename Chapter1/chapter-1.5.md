@@ -26,11 +26,13 @@
 
 이러한 일련의 과정을 다음처럼 그려보겠습니다.
 
-<img src="/Users/ju/Documents/top-down-approach-network/Chapter1/resource/subway-trip.png" alt="subway-trip" style="zoom:67%;" />
+![subway-trip](https://user-images.githubusercontent.com/57349658/114291751-cc7ddc00-9ac4-11eb-9597-f3cc92652799.png)
+
 
 오.. 층같은게 보이지 않나요? 다음 처럼요~
 
-![subway-trip-layer](/Users/ju/Documents/top-down-approach-network/Chapter1/resource/subway-trip-layer.png)
+![subway-trip-layer](https://user-images.githubusercontent.com/57349658/114291755-d0a9f980-9ac4-11eb-91da-c7707c2d3a27.png)
+
 
 지하철타는 일련의 과정을 다음처럼 층을 지어 설명할 수 있습니다.
 
@@ -187,7 +189,8 @@ frame에 있는 **각 bit**를 다른 노드로 넘겨주는 역할을 합니다
 
 ## 1.5.2 Encapsulation
 
-![figure 1.24 encapsulation](/Users/ju/Documents/top-down-approach-network/Chapter1/resource/figure 1.24 encapsulation.png)
+<img width="995" alt="figure 1 24 encapsulation" src="https://user-images.githubusercontent.com/57349658/114291758-d69fda80-9ac4-11eb-9cce-b8fc65bdbd90.png">
+
 
 encapsulation은 이 그림으로 끝입니당.
 
