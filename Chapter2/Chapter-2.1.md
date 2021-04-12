@@ -96,3 +96,84 @@ network app의 코어에서는 개발이란 network를 통해 결국 서로 다�
 
 몇몇 app들은 두 개를 혼용해서 사용하기도 합니다~
 
+
+
+
+
+## 2.1.2 Processes Communicating
+
+이번 소단원에서는 network application을 개발하기 전에, 어떻게 서로 다른 두 프로세스가 통신하는지 알아보겠습니다.
+
+우선, 호스트 내 프로세스끼리 통신은 운영체제에 의해 컨트롤됩니다. 이건 IPC 내용을 참고하시면 될 것 같구요... 여기서는 서로 다른 두 호스트간에 통신을 얘기해보겠습니다.
+
+프로세스는 network를 통해서 messages로 통신하죠.
+
+1. sender process는 메세지를 생성하고 네트워크로 전송합니다.
+2. receiver process 그 메시지를 받고 더 나아가 메세지를 돌려줌으로써 응답할 수도 있습니다.
+
+
+
+### Client and Server Processes
+
+client, server가 뭐 대단한 용어같은데, 데이터를 받으면 client, 보내면 server에요. 여기 내용은 이게 전부입니다.
+
+P2P보면 데이터를 다운로드하는 동시에 업로드하잖아요? 그러면 그 end-system은 클라이언트일까요? 서버일까요?
+
+정답은 둘 다입니다. ㅎㅎ; 그냥 역할 놀이하는 거에요.
+
+
+
+### The Interface Between Process and the Computer Network
+
+서로 다른 두 프로세스는 메세지를 전송함으로써 통신한다고 했잖아요? 그럼 그 메세지는 아래 계층으로 전달되야 하는거겠죠?
+
+결론적으로, 어떤 인터페이스를 통해 아래 계층으로 메세지가 전송될까요?? 자바에서 terminal에 문자를 출력하려면 System.out.println를 사용해야하는 것 처럼요.
+
+바로바로~~ Socket이라는 놈입니다. 한 번은 꼭 들어봤으리라 생각듭니다. ㅎㅎ
+
+#### Socket
+
+Socket은 호스트내 Application Layer와 Transport Layer 사이를 연결시켜주는 인터페이스입니다. 이것은 host의 컴퓨터에 내장되어 있죠.
+
+그래서 소켓으로 모든 Application Layer쪽을 컨트롤 할 수 있습니다. 
+
+한편으로 socket으로 약간 transport layer를 컨트롤할 수 있죠.  
+
+1)어떤 프로토콜을 선택할 지, 
+
+2) transport-layer의 parameter 수정 ex:)  buffer size
+
+총 두 가지를 컨트롤할 수 있습니다.
+
+그래서 application developer가 transport protocol을 정하면 그 프로토콜로 고정되어 해당 서비스를 받을 수 있죠.
+
+
+
+### Addressing Processes
+
+한편으로, 메세지 투입구까지 알았잖아요? 그렇다면, 저기 어딘가에 있는 호스트의 프로세스를 어떻게 특정하여 메세지를 전송할 수 있을까요?
+
+아래 그림을 보고 다시 한 번 생각해보세요.
+
+
+
+<img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/Figure 2.3 Application processes.png" alt="Figure 2.3 Application processes" style="zoom:50%;" />
+
+### 
+
+특정 짓기 위해서 다음을 고려해야 한다고 볼 수 있습니다.
+
+#### 1) 호스트의 주소
+
+인터넷상 호스트의 주소는 뭐라고 했죵? 바로 IP입니다~ IP를 알면 호스트를 특정지을 수 있어요.
+
+#### 2) 프로세스 번호
+
+프로세스간 통신이라고 했죠? 호스트의 프로세스를 특정지어야 하잖아요~ 프로세스번호도 번호지만, 소켓으로 통신한다고 했죠? 나중에 나올 내용이지만, 소켓이 연결된 포트번호로 프로세스를 지정할 수 있습니다.
+
+그래서 보통 유명한 어플리케이션은 Webserver -> port 80, SSL -> port 443 등으로 미리 지정되어 있습니다.
+
+
+
+
+
