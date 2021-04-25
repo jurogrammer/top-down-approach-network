@@ -343,3 +343,73 @@ status code 및 message 몇 개를 살펴보겠습니다.
 
 <img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/Figure 2.10 Keeping user state with cookies.png" alt="Figure 2.10 Keeping user state with cookies" style="zoom:50%;" />
 
+
+
+
+
+## 2.2.5 Web Caching
+
+object를 캐싱하는 서버가 필요한 이유에 대해 설명하고 작동방식에 대해 말씀드리겠습니다.
+
+### Web caching이 필요한 이유
+
+<img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/Figure 2.12 Bottleneck between an institutional network and the Internet.png" alt="Figure 2.12 Bottleneck between an institutional network and the Internet" style="zoom:50%;" />
+
+ISP 내에 있는 client가 public network에 존재하는 origin servers에서 데이터를 가져온다고 봅시다.
+
+위 그림에서 isp subnet에선 속도가 100Mbps인 반면, Public Internet으로의 access link는 15Mbps밖에 안되죠? ISP내 여러 Client가 외부로 데이터를 여러개 요청하면 bottle neck이 생길 수 밖에 없습니다.
+
+하지만, public internet에서 요청한 object를 ISP의 subnet에 캐싱해두는 서버가 있다면?  말이 달라지죠. access link를 타야할 패킷들이 subnet에서 처리될 뿐더러, 속도가 100Mbps 이므로 client 입장에서 매우 쾌적하겠죠?
+
+캐싱이 40%만 되도 아주 큰~~ 이점이 있다고 책에선 간단한 상황으로 보여주네요. 그리고 보통 ISP에 의해 web cache server가 운영됩니다.
+
+
+
+### 작동 과정
+
+1. 브라우저가 웹 캐시 서버에게 tcp connection후  http request를 보냅니다.
+2. 웹 캐시 서버가 object가 존재한다면 client brower에게 object를 전송합니다.
+3. 만약에 object가 없다면 origin server와 TCP connection 후에 origin server가 웹 캐시서버에게 object를 보냅니다.
+4. 웹 캐시 서버가 object를 받은다면 local storage에 저장한 뒤, HTTP response로 client broswer에게 object 복사본을 보냅니다. (이미 연결 중인 TCP connection으로 object를 보내겠죠.)
+
+
+
+### 구현 방식 - Conditional GET
+
+구현에 있어 고려할 사항이 있습니다. 바로 전형적인 캐시문제인데요. 웹 캐시 서버에서 저장 중인 object와 origin object가 달라질 수 있다는 뜻입니다.(stale, 신선하지 않은, 오래된) 다시 말해서 캐싱한 이후로 object가 변경될 수 있다는 뜻이죠.
+
+HTTP가 어떻게 캐시가 최신의 자료인지 판단할 수 있는지 그 메커니즘을 살펴보겠습니다. 그리고 이 메커니즘을 Conditional GET이라 부르죠.
+
+다음 두 조건이 충족되어야 합니다.
+
+1) request message는 GET method를 사용해야 하며
+
+2) request message는 If-Modified-Since header line을 포함하고 있어야 합니다.
+
+
+
+과정은 다음과 같습니다
+
+1. client server가 웹 캐시 서버에 요청을 보냅니다.
+
+2. 웹 캐시 서버는 웹 서버에게 object를 요청합니다.
+
+3. 웹 서버는 Last-Modified 헤더와 함께 response message를 전송하죠. 이때 캐시 서버도 이 last modified 헤더를 저장합니다.
+
+4. 일주일 뒤에 브라우저가 웹 캐시 서버에게 동일한 object를 요청합니다.
+
+5. object가 변경되었을 수도 있기 때문에 웹 캐시 서버는 오리진 서버에게 conditional GET message를 전송합니다. 
+
+   이때 If-modified-since는 Last-Modified 값을 그대로 전달해주어야 합니다.(테스트해보니깐 값이 다르면 무조건 전송해주더라구요.)
+
+6. 만약에 변경이 안 됬으면 오리진 서버는 다음 response message를 전송해줍니다.
+
+   ```
+   HTTP/1.1 304 Not Modified
+   Date: Sat, 10 Oct 2015 15:39:29
+   Server: Apache/1.3.0 (Unix)
+   
+   (empty entity body)
+   ```
+
+   object를 담아 보내주지 않죠!
