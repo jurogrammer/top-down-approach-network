@@ -189,3 +189,136 @@ time to transmit file: 파일 전송 시간
 하나의 object를 보낸 뒤 TCP연결을 즉시 끊지 않고 그 연결된 TCP로 연속적으로 request를 받고, response해주는 형태를 지닙니다.
 
 이때 connection이 종료되는 시점은 요청이 일정시간 들어오지 않았을 때 connection이 끊기도록 되어있죠.
+
+
+
+## 2.2.3 HTTP Message Format
+
+메세지의 규약이 있겠죠? 메세지를 http에서 정한 형태로 보내주고, http에서 정한 방식대로 파싱을 해줘야 그 의미를 알 수 있겠죠. 결국, 매우 매우~ 핵심적인 단원이라 보시면 됩니다.
+
+```
+GET /somedir/page.html HTTP/1.1
+Host: www.someschool.edu
+Connection: close
+User-agent: Mozilla/5.0
+Accept-language: fr
+```
+
+1. message는 ASCII text로 구성되어 있습니다.
+
+2. 5개의 라인으로 되어있는데, 각 라인 끝에는 carriage return, line feed가 있죠 (\r\n) 이보다 더 많은 라인을 가질 수 있습니다.
+
+3. 첫번째 라인을 request line이라 부릅니다.
+
+4. 두번째 이후의 라인을 header lines라고 부릅니다.
+
+   각각의 의미를 살펴보면 다음과 같습니다.
+
+   1) Host: ... => object가 존재하는 host 명
+
+   2) Connection: close => non-persistent connection 설정
+
+   3) User-agent: ~~ => broser type
+
+   4) Accept-language: fr => 프랑스어 버전으로 주세요~ 요청하는 것. 서버에서 없다면 default version을 건네줌
+
+   이 외에도 수 많은 헤더를 가질 수 있습니다.
+
+5. method에 따라 entity body도 가지죠. 
+
+그래서 이 양식을 보면 좀 뒤통수 맞으실 수 있습니다.
+
+<img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/general format of an HTTP request message.png" alt="general format of an HTTP request message" style="zoom:50%;" />
+
+sp는 space bar를 의미하고, cr lf는 carriage return, line feed를 의미합니다. 헐랭~
+
+
+
+METHOD를 살펴보겠습니다.
+
+**GET**
+
+get에선 entity body는 없습니다. 만약 작성한다해도 quey parameter로 넘어가죠. 만약에 form에 input field가 monkeys, bananas를 작성했다면 
+
+/animalsearch?monkeys&bananas 형태로 url이 변경되어 요청됩니다.
+
+
+
+**POST**
+
+보통 form을 작성했을 때 post 메서드로 요청이 갑니다. 보통 검색을 한다면 form fields의 값에 따라 결과가 달라지죠.
+
+
+
+**HEAD**
+
+보통 디버깅할 때 사용됩니다. GET method와 유사하나, 실제 object를 받진 않습니다.
+
+
+
+**PUT**
+
+object를 특정 경로에 업로드하는 것을 허용합니다.
+
+
+
+**DELETE**
+
+web server의 특정 경로에 있는 object를 삭제하도록 해주죠.
+
+
+
+### HTTP Response Message
+
+request message에 대한 response message를 의미합니다.
+
+```
+HTTP/1.1 200 OK
+Connection: close
+Date: Tue, 18 Aug 2015 15:44:04 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Tue, 18 Aug 2015 15:11:03 GMT
+Content-Length: 6821
+Content-Type: text/html
+
+(data data data dta data ...)
+```
+
+response message또한 3개의 부분으로 나뉘죠
+
+1. status line
+2. header line
+3. entity body
+
+로 나뉩니당.
+
+
+
+#### 1. status line
+
+3개의 필드로 구성되어 있습니다. protocol version, status code, status meesage로 구성되어 있죠.
+
+status code 및 message 몇 개를 살펴보겠습니다.
+
+* 200 OK: request가 성공했고, 그에 맞는 response가 반환되었다는 뜻입니다.
+* 301 Moved Permanently: 요청한 object가 이동되었다는 뜻입니다. 그리고 새 url이 표기 되는데, Location: header에 그 새로운 url이 표시가 됩니다. 보통 클라이언트 소프트웨어에서는 자동으로 새로운 url로 이동하죠
+* 400 Bad Request: request가 잘못되었다고 나타내주는 일반적인 오류 코드입니다.
+
+* 404 Not Found: 요청한 Document가 서버엔 없다는 뜻입니다.
+* 505 HTTP Version Not Supported: request message에 작성된 http version을 서버가 제공해주지 않는다는 뜻입니다.
+
+
+
+#### 2. header line
+
+* Connection: close => message를 보낸 뒤 tcp를 끊을 것이라 말해주는 헤더입니다.
+* Date:  => http response가 언제 생성되었고 보내졌는지말해주는 헤더입니다. (object 수정시간 아닙니다.)
+* Server: => 누가 이 메세지를 생성했는지 말해주는 헤더입니다.
+* Last-Modified: => object가 생성되거나 수정된 날짜를 의미합니다. (Date랑 구분해야겠지요?)
+* Content-Length: => object의 byte 수를 의미합니다.
+* Content-Type: => object entity body의 타입을 의미합니다. 여기선 text/html 이라고 하네요.  object type은 공식적으로 확장자가 아닌 이 헤더에 의해 결정됩니다.
+
+
+
+
+
