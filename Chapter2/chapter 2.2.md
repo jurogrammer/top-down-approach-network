@@ -322,3 +322,24 @@ status code 및 message 몇 개를 살펴보겠습니다.
 
 
 
+### 2.2.4 User-Server Interaction: Cookies
+
+앞 헤더 부분을 이해하셨다면 정말 별거 없습니다... HTTP server는 stateless하다 했잖아요? 그런데 상태를 그래도 유지하고 싶다는 것이죠. 방법은~ 간단합니다. 
+
+헤더에 서버가 생성해낸 값을 클라이언트에게 넘겨주고 클라이언트가 그 정보를 헤더에 담아 요청을 하도록 만들면 됩니다. 그렇다면 서버는 누가 그 요청을 보냈는지 정보를 알 수 있으니까요. 이게 쿠키입니다.
+
+쿠키는 거기서 유래된다고 하더라구용.(정확히는 기억이 안나네요...) 쿠키 반으로 쪼개서 딸에게 준 뒤 얼굴 잊어버릴 때 쯤 만나서 서로의 쿠키를 맞대어보면 딸인지 알 수 있는 것. 그런 느낌입니다.
+
+그렇다면 서버는 유저에게 넘겨준 값을 가지고 있어야 하니까 값을 데이터 베이스가 필요하겠죠? 더불어 상태에 대한 값도 집어넣어줘야겠구요. 이를 4가지 요소로 정리할 수 있습니다.
+
+1. http response message의 cookie header line
+2. http request message의 cookie header line
+3. user의 end system에 저장되고 broswer에 의해 관리되는 cookie file
+4. web site의 back-end database
+
+
+
+상호 작용은 아래와 같습니다.
+
+<img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/Figure 2.10 Keeping user state with cookies.png" alt="Figure 2.10 Keeping user state with cookies" style="zoom:50%;" />
+
