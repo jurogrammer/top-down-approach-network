@@ -158,7 +158,8 @@ http://www.someSchool.edu/someDepartment/home.index
 
 #### 시간 측정
 
-![이미지 2021. 4. 25. 오후 1.36](/Users/ju/Documents/top-down-approach-network/Chapter2/resources/이미지 2021. 4. 25. 오후 1.36.jpg)
+![RTT](https://user-images.githubusercontent.com/57349658/115983297-4f318b80-a5db-11eb-8974-70ab3ceb53a9.jpg)
+
 
 타임라인
 
@@ -228,7 +229,8 @@ Accept-language: fr
 
 그래서 이 양식을 보면 좀 뒤통수 맞으실 수 있습니다.
 
-<img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/general format of an HTTP request message.png" alt="general format of an HTTP request message" style="zoom:50%;" />
+<img width="777" alt="general format of an HTTP request message" src="https://user-images.githubusercontent.com/57349658/115983299-56589980-a5db-11eb-85f5-67b25741af22.png">
+
 
 sp는 space bar를 의미하고, cr lf는 carriage return, line feed를 의미합니다. 헐랭~
 
@@ -341,9 +343,7 @@ status code 및 message 몇 개를 살펴보겠습니다.
 
 상호 작용은 아래와 같습니다.
 
-<img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/Figure 2.10 Keeping user state with cookies.png" alt="Figure 2.10 Keeping user state with cookies" style="zoom:50%;" />
-
-
+<img width="841" alt="Figure 2 10 Keeping user state with cookies" src="https://user-images.githubusercontent.com/57349658/115983302-5ce71100-a5db-11eb-9478-ae8091c5fc00.png">
 
 
 
@@ -353,7 +353,8 @@ object를 캐싱하는 서버가 필요한 이유에 대해 설명하고 작동�
 
 ### Web caching이 필요한 이유
 
-<img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/Figure 2.12 Bottleneck between an institutional network and the Internet.png" alt="Figure 2.12 Bottleneck between an institutional network and the Internet" style="zoom:50%;" />
+<img width="630" alt="Figure 2 12 Bottleneck between an institutional network and the Internet" src="https://user-images.githubusercontent.com/57349658/115983306-61abc500-a5db-11eb-9197-daf7098b792e.png">
+
 
 ISP 내에 있는 client가 public network에 존재하는 origin servers에서 데이터를 가져온다고 봅시다.
 
