@@ -175,5 +175,113 @@ Socket은 호스트내 Application Layer와 Transport Layer 사이를 연결시�
 
 
 
+### 2.1.3 Transport Services Available to Applications
+
+이번에는 transport layer에 대해 간단히 알아보겠습니다. 왜냐하면, 어플리케이션을 작성할 때 어떤 transport service를 사용할 지 정해주어야 하거든요.  소켓이 application layer 와 Transport layer를 이어주는 부분이니까요.
 
 
+
+그렇다면 어떤 기준으로 서비스를 선택해야 할까요? 그 기준 또는 성질 4가지를 알아보겠습니다. 
+
+#### 1. reliable data transfer
+
+chapter1에서 언급했듯이 생각보다 패킷이 100% 잘 전달되리라 보장할 수 없습니다. 패킷이 손실, 변조될 수 있거든요. 따라서 문서들의 데이터가 바뀐다는 것은 매우 큰 손실 일 수 있습니다.
+
+따라서 application의 특징에 따라 데이터를 올바르게, 그리고 모두 전달하기 위한 전송 방법을 고려해야할 수도 있죠. 이런 측면을 reliable data transfer이라고 부릅니다.
+
+참고로 비디오나 오디오는 손실이 좀 되도 상관없기도 합니다.
+
+
+
+#### 2. throughput
+
+보장된 처리량을 제공해주는지로 보면 됩니다.  음악을 생각해볼게요. 전송량이 많지 않아도, 끊김없이 들으려면 일정 처리량을 보장해주어야겠지요?
+
+한편으로 처리량에 민감한 application을  bandwidth-sensitive applications라고 부릅니다. 그 반대는 elastic applications라고 부르죠(mail, file 전송같은 것들)
+
+
+
+#### 3. timing
+
+타이밍 관련된 것도 보장할 수 있어요. 여기선. 엄청나죠? 게임보면 핑 있잖아요. 몇 ms이내에는 반드시 데이터를 받아야 한다. 이런걸 보장해주는 요소라고 보면 됩니다.
+
+
+
+#### 4. security
+
+보안과 관련된 서비스도 제공해줄 수 있어요. 데이터를 암호화하여 전송하는 것이죠.
+
+
+
+### 2.1.4 Transport Services Provided by the Internet
+
+앞서 언급했던 4가지 요소는 일반적인 네트워크에서 transport layer가 제공하는 서비스를 4가지 측면에서 살펴본거구용. **인터넷** 네트워크에서는 TCP,UDP 2가지 종류의 transport layer protocol이 존재합니다.
+
+#### 
+
+#### TCP services
+
+tcp service model은 connection-oriented service, reliable data transfer service 두 가지를 포함하죠.
+
+##### 1. connection-oriented service
+
+application message를 전송하기 전에 transport-layer control information을 서로 교환합니다. 이러한 정보 교환 과정을 3-way handshake라고 부르죠.
+
+이러한 handshake 과정이 성공적으로 끝난다면, 두 프로세스의 소켓 간에 **tcp connection**이 존재한다.라고 부릅니다!
+
+> 헉, 소켓 간에 TCP-connection이 존재한다고 말하네용.
+
+이 tcp connection은 full-duplex connection이라 부르는데요, 용어를 찾아보니half-duplex connection과 비교하면 와닿으실 겁니다.
+
+half-duplex connection은 한쪽이 보내고 있으면 한 쪽은 받기만 해야하는데, full-duplex는 한쪽이 보낼 때 다른 한 쪽도 보낼 수 있습니다.
+
+> 흠... 그렇다는 것은 sender, receiver buffer를 둘 다 지녀야 한다는 뜻이 되겠네요...? 아닐 수도 있구용 ㅎㅎ;
+
+
+
+자세한 내용은 어차피 3장에서 배우니 이렇구나... 하고 넘어가시면 됩니다.
+
+
+
+##### 2. reliable data transfer service
+
+앞서 말했듯이 에러없이, 정확한 순서대로, 누락없이 데이터를 보내는 것을 보내죠.
+
+
+
+
+
+#### UDP Services
+
+아주 기본이 되는 서비스라고 보시면 됩니다. 통신하기 위한 최소만 설정되어 있어요. 그래서 connection을 가질 필요가 없어서 handshake과정도 필요없고 신뢰성있는 데이터도 보장하지 않아요.
+
+
+
+
+
+### 2.1.5 Application-Layer Protocols
+
+프로세스들이 메세지를 소켓으로 집어넣는다고 말했는데요, 메세지의 구조는 어떻게 되어 있을까요? 양식같은거 말이에요. 
+
+비유를 들어볼게요.
+
+편지를 쓸 땐 상단에 보낸이, 중간엔 내용 하단엔 받는 이정도 보내잖아요? 뭐 비문학 글쓰기를 한다면 서론 본론 결론정도로 글을 쓰구요. 이렇게 글의 구조가 바뀌죠? application meesage도 그렇다는거에요.
+
+이러한 구조를 강제하면 protocol이라고 말할 수 있죠. 그 메세지가 바로 application-layer의 protocol이라고 말할 수 있습니다. application-layer protocol은 다음 아래 사항을 규정하죠
+
+* 교환되는 message의 타입을 정합니다. ex:) request message, response message
+* 다양한 message type의 문법을 정합니다. ex:) 어떤 구분자를 사용하여 field의 구분할 지
+* field의 의미를 정합니다. ex:) information field의 의미
+* 프로세스가 언제 어떻게 메세지를 보내고 받아야할 지에 대한 규칙을 정합니다.
+
+
+
+application 프로토콜은 RFCs에 공식적으로 규정되어 있기도 하구요, skype처럼 비공개로 지니고 있기도 합니다.
+
+
+
+### 2.1.6 Network Applications Covered in This Book
+
+application-layer인 만큼... 수많은 개발자들이 지금도 여러 protocol을 개발하고 있습니다. 이 모든 내용을 다 알아야할 필요가 있을까요... 따라서 유명하고 중요한 것들만 알아보겠습니다.
+
+이 책에선 메일 서비스 프로토콜, P2P등도 다루지만, 지금은 웹 개발자이므로 HTTP, DNS에 대해서만 알아보겠습니다~ 나중에 혹여나 업종이 바뀌면 그때 배우면 되죵 ㅎㅎ
