@@ -18,7 +18,7 @@ network app의 코어에서는 개발이란 network를 통해 결국 서로 다�
 
 그래서 새로운 app을 개발한다면, 여러 end system에 동작할 소프트웨어를 개발해야 합니다. 여기서 network core device관련 코드는 짤 필요가 없어요. **application layer에서 동작하지 않으니까요!!** network layer이하의 코드는 건들 필요가 없습니다. 그림으로 나타내면 다음과 같죠
 
-<img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/Figure 2.1 Communcation for a network application takes place between end system at the application layer.png" alt="Figure 2.1 Communcation for a network application takes place between end system at the application layer" style="zoom:67%;" />
+<img width="582" alt="Figure 2 1 Communcation for a network application takes place between end system at the application layer" src="https://user-images.githubusercontent.com/57349658/115983250-12fe2b00-a5db-11eb-8458-551aea5ef16b.png">
 
 
 
@@ -157,7 +157,8 @@ Socket은 호스트내 Application Layer와 Transport Layer 사이를 연결시�
 
 
 
-<img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/Figure 2.3 Application processes.png" alt="Figure 2.3 Application processes" style="zoom:50%;" />
+<img width="825" alt="Figure 2 3 Application processes" src="https://user-images.githubusercontent.com/57349658/115983261-1c879300-a5db-11eb-9464-73755a0921a5.png">
+
 
 ### 
 
