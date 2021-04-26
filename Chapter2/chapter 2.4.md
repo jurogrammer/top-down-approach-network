@@ -194,3 +194,82 @@ local DNS server가 client DNS를 대신하여 query한다는 점에서 recursiv
 
 요청을 받았을 때 local DNS server에 root dns의 message가 캐싱되어 있다면 root dns에 쿼리를 안보낼 수도 있습니다. 그래서 보통 root DNS server로 트래픽이 적은 편이지요.
 
+
+
+## 2.4.3 DNS Records and Messages
+
+DNS distributed database를 구현한 서버들은 당연히도~ 데이터를 저장하고 있어야 값을 반환시켜줄 것 아니에요? 이번엔 어떤 형태로 저장하고 있는지를 알아보겠습니다.
+
+그리고 이 데이터들을 **resource records (RRs)**라고 부릅니다.
+
+그리고 매 DNS reply message는 1개 이상의 resource records를 반환하죠.
+
+
+
+### 형태
+
+4가지 튜플로 구성됩니다.(four-tuple)
+
+```
+(Name, Value, Type, TTL)
+```
+
+#### TTL
+
+time to live의 약자로, 죽기까지 남은 시간이라고 보시면 됩니다 ㅠㅠ 아무래도 캐싱 데이터이기 때문이지요. 보통 초 단위라고 하네요.
+
+
+
+그리고 Name, Value는 Type에 의해 결정됩니다. Type에 따른 Name, Value의 값을 살펴보겠습니다.
+
+
+
+#### Type=A
+
+Name: hostname
+
+Value: 호스트 네임에 대한 IP address
+
+따라서 Type이 A라면 standard hostname => IP address 매핑을 나타낸다고 볼수 있습니다.
+
+ex:) (relay1.bar.foo.com, 145.37.93.126, A)    (TTL은 무시하고 작성하겠습니다.)
+
+
+
+#### Type=NS
+
+Name: domain(such as foo.com)
+
+Value: hostname of authoritative DNS server (해당 도메인에 있는 host name의 IP를 알 수 있는 dns server라고 보시면 됩니다.)
+
+query chain을 좀 더 할 수 있도록 연결해주는 역할을 맡죠.
+
+ex:) (foo.com, dns.foo.com, NS)
+
+
+
+#### Type=CNAME
+
+Name: alias hostname
+
+Value: canonical hostname
+
+ex:) (foo.com, relay1.bar.foo.com, CNAME)
+
+
+
+
+
+Type=NS에 대해 추가 설명해보겠습니다. TLD server의 경우, Type=NS인 record를 가지고 있겠죠? 호스트 이름에 대한 IP를 모르니까 다음 authoritative server를 알려줘야 하니까요. 그런데, NS만 가지고 있으면 어떻게 local dns server가 authoritative server를 찾아가겠나요? 따라서, authoritative server에 대한 Type=A record도 같이 가지고 있습니다.
+
+(umass.edu,**dns.umass.edu**, NS)
+
+(**dns.umass.edu**, 128.119.40.111, A)
+
+이런식으로 말이죠.
+
+
+
+
+
+이 외의 DNS 설명은 나중에 필요할 때 다시 읽고, 보완하도록 하겠습니다.
