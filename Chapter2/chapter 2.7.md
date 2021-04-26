@@ -210,3 +210,169 @@ clientAddress는 서버와 달리 메세지를 전달하기 위해선 반드시 
 
 다음 TCP 소켓 프로그래밍 구현과 비교해보시면 매우매우 큰 차이점을 체감하실 수 있을 겁니다. 바로 TCP를 알아보겠습니다.
 
+
+
+
+
+## 2.7.2 Socket Programming with TCP
+
+### UDP와 차이점 - connection-oriented
+
+UDP와 TCP의 매우 큰 차이점은 TCP는 connection-oriented라는 점입니다!! 서로 다른 호스트에서 돌아가는 소켓이 TCP connection을 맺고, 그 연결된 소켓에 단순히 데이터를 전달해주는 형태이지요. 
+
+따라서 UDP와 달리 연결된 소켓만 있다면 server는 client의 주소를 몰라도 됩니다.
+
+
+
+그래서 TCP client는 tcp connection을 initiating하게 되죠. 이것은 2가지를 내포하게 됩니다.
+
+1. UDP처럼 tcp server도 동작 중이어야 한다.
+2. 서버에는 client의 connection을 맺는 특별한 소켓이 필요하다.
+
+오... 2번은 좀 생소할 수 있어요 지금은 무슨 의미인지 잘 모르겠구요. 코딩하면 딱 와닿습니다.
+
+client socket은 커넥션을 담당하는 serverSocket에게 3-way handshake를 수행하구요, 실질적인 연결은 서버가 새로 생성한 connectionSocket과 상호작용하게 됩니다. 충격적이지요? 
+
+
+
+이렇게 연결된 소켓으로 동시에 데이터를 주고 받을 수 있게 됩니다.
+
+
+
+<img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/Figure 2.28 The TCPServer process has two sockets.png" alt="Figure 2.28 The TCPServer process has two sockets" style="zoom:33%;" />
+
+
+
+### 과정
+
+<img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/Figure 2.29 The client-server application using TCP.png" alt="Figure 2.29 The client-server application using TCP" style="zoom:50%;" />
+
+
+
+### TCPClient.py
+
+```python
+from socket import *
+
+serverName = ’servername’
+serverPort = 12000
+clientSocket = socket(AF_INET, SOCK_STREAM)
+
+clientSocket.connect((serverName, serverPort))
+
+sentence = raw_input(’Input lowercase sentence:’)
+clientSocket.send(sentence.encode())
+
+modifiedSentence = clientSocket.recv(1024)
+
+print(’From Server: ’, modifiedSentence.decode())
+clientSocket.close()
+```
+
+
+
+#### 소켓 생성
+
+```python
+clientSocket = socket(AF_INET, SOCK_STREAM)
+```
+
+`SOCK_STEAM`은 TCP쓰겠다는 뜻입니다. 다른 부분은 UDP와 별반 차이 없죠.
+
+
+
+#### 연결
+
+```python
+clientSocket.connect((serverName, serverPort))
+```
+
+UDP와 엄청난 차이점이 눈에 보이시나요?! 바로 **연결**을 시도하고 있습니다. 헉! 해당 포트는 그럼 3-wayhandshake를 담당해주는 포트라고 보시면 됩니다.
+
+해당 코드가 실행되면 3-wayhandshake가 수행되고, client-server간 TCP connection이 생성됩니다. 즉, 이땐 connectionSocket과 연결된다는 뜻이겠죠.
+
+
+
+#### 전송
+
+```python
+clientSocket.send(sentence.encode())
+```
+
+UDP와 달리 server address를 명시하지 않고 있습니다. 바로~! TCP connection된 socket으로 데이터를 밀어넣기만 하면 전송이 되니까요!
+
+
+
+#### 종료
+
+```python
+clientSocket.close()
+```
+
+이 명령어를 통해 TCP connection이 종료됩니다. 
+
+
+
+
+
+### TCPServer.py
+
+```python
+from socket import *
+serverPort = 12000
+serverSocket = socket(AF_INET, SOCK_STREAM)
+
+serverSocket.bind((’’, serverPort))
+serverSocket.listen(1)
+
+print(’The server is ready to receive’)
+while True:
+    connectionSocket, addr = serverSocket.accept()
+    
+    sentence = connectionSocket.recv(1024).decode()
+    capitalizedSentence = sentence.upper()
+    connectionSocket.send(capitalizedSentence.encode())
+    connectionSocket.close()
+```
+
+
+
+#### serverSocket listen
+
+```python
+serverSocket.listen(1)
+```
+
+요놈이 바로 3-wayhandshake를 담당해주는 애가 되겠죠. tcp connection 요청을 듣는 상태가 됩니다. 파라미터의 의미는 줄서고 있는 커넥션의 최대 수를 의미합니다. 여기선 최대 1개라고 명시되어 있네요.
+
+
+
+
+
+#### connectionSocket 생성
+
+```python
+connectionSocket, addr = serverSocket.accept()
+```
+
+serverSocket이 accept하면, 이때 connecitonSocket이 생성됩니다.
+
+
+
+#### connectionSocket 종료
+
+```python
+connectionSocket.close()
+```
+
+이 메서드를 수행하면 변환된 문자를 보낸 뒤, 커넥션이 종료되죠. 하지만! serverSocket은 여전히 listen 상태이기 때문에 클라이언트와 새로 연결을 맺을 수 있습니다.
+
+
+
+
+
+
+
+### 정리
+
+UDP, TCP 코드보면 미묘하게 다른 점이 보이시죠? 직접 쳐보시고, 변형하여 만들어보면서 차이점을 몸 깊숙히 느끼면 좋겠습니다. ㅎㅎ
