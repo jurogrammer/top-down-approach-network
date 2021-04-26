@@ -83,8 +83,7 @@ C, C++, java등으로 다 개발할 수 있습니다. 이 책에서는 핵심을
 
 
 ### 과정
-
-### <img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/Figure 2.27 The client-server application using UDP.png" alt="Figure 2.27 The client-server application using UDP" style="zoom: 33%;" />
+<img width="812" alt="Figure 2 27 The client-server application using UDP" src="https://user-images.githubusercontent.com/57349658/116094906-e5040e00-a6e2-11eb-9aa2-24fea493f3ab.png">
 
 
 
@@ -239,13 +238,15 @@ client socket은 커넥션을 담당하는 serverSocket에게 3-way handshake를
 
 
 
-<img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/Figure 2.28 The TCPServer process has two sockets.png" alt="Figure 2.28 The TCPServer process has two sockets" style="zoom:33%;" />
+<img width="587" alt="Figure 2 28 The TCPServer process has two sockets" src="https://user-images.githubusercontent.com/57349658/116095007-f9e0a180-a6e2-11eb-9349-9986b691d7df.png">
+
 
 
 
 ### 과정
 
-<img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/Figure 2.29 The client-server application using TCP.png" alt="Figure 2.29 The client-server application using TCP" style="zoom:50%;" />
+<img width="820" alt="Figure 2 29 The client-server application using TCP" src="https://user-images.githubusercontent.com/57349658/116095013-fbaa6500-a6e2-11eb-80f1-77759a8177c4.png">
+
 
 
 
