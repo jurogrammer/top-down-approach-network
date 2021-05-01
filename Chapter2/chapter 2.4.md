@@ -110,7 +110,8 @@ DNS client로 hostname의 ip를 알려달라고 query를 보내면 어찌고 저
 
 scale문제 때문에 계층적 구조를 지니고 있습니다.  각 층마다 가지고 있는 정보가 제한되어 있죠. 위에서 보았듯, 한 서버가 모든 데이터를 가지고 있으면 여러 문제점들이 발생하니까요. 따라서 총 3개의 계층으로 나누어져 있습니다. root DNS servers, top-level domain(TLD) DNS servers, authoritative DNS servers
 
-<img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/Figure 2.17 Portion of the hierarchy of DNS servers.png" alt="Figure 2.17 Portion of the hierarchy of DNS servers" style="zoom:50%;" />
+<img width="715" alt="Figure 2 17 Portion of the hierarchy of DNS servers" src="https://user-images.githubusercontent.com/57349658/116082715-b2541880-a6d6-11eb-8eb1-1fec7fab11dd.png">
+
 
 Roots는 top level domain의 TLD servers IP address를 반환해줍니다.
 
@@ -153,8 +154,8 @@ client-host: cse.nyu.edu
 알고 싶은 호스트: gaia.cs.umass.edu
 
 gaia.cs.umass.edu가 어떻게 ip로 변환되는지 알아보겠습니다.
+<img width="437" alt="Figure 2 19 Interaction of the various DNS servers" src="https://user-images.githubusercontent.com/57349658/116082736-b718cc80-a6d6-11eb-9ab5-df8b646df7db.png">
 
-<img src="/Users/ju/Documents/top-down-approach-network/Chapter2/resources/Figure 2.19 Interaction of the various DNS servers.png" alt="Figure 2.19 Interaction of the various DNS servers" style="zoom:50%;" />
 
 
 
