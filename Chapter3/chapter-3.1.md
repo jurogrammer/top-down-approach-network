@@ -35,3 +35,25 @@ transport-layer protocol은 서로 다른 호스트에서 돌아가는 프로세
 
 
 
+
+
+
+
+## 3.1.1 Relationship Between Transport and Network Layers
+
+### 1. protocol stack에서 transport layer는 network layer에 존재합니다.
+
+이 뜻은 tranport layer의 서비스가 network layer에 영향을 받는다는 뜻이 됩니다.
+
+예를 들어서 라우팅하는 과정에서 패킷을 잃어버릴 수 있다고 말씀드렸죠? 그래서 transport layer는 reliable data service를 제공합니다. 또한, timing관련하여 말씀드리면 network layer에서 일정 시간 내 패킷을 전송해줄 수 있다.라고 보장 못해요. 그러니까 transport layer에서 또한 타이밍을 100% 보장할 수 없겠죠. ㅠㅠ
+
+
+
+### 2. Network layer는 호스트 간의 논리적 연결을 도맡고, transport layer는 서로 다른 호스트간 프로세스의 논리적 연결을 도맡습니다.
+
+오... 명확하네요. IP가 인터넷 상에 호스트를 구분짓는 역할이였고, portNumber가 프로세스가 가진 소켓의 idenifier였으니까요. 한편으로, 패킷을 받는 쪽 transport layer를 생각해볼게요. network layer로 부터 패킷을 받았는데, 이 패킷을 어떤 소켓으로 전달해줘야 할까요?
+
+호스트 내 프로세스는 여러 개 있을 수 있고, 프로세스 내에서도 소켓을 여러 개 생성할 수 있습니다. 패킷을 보내줘야할 소켓을 식별하여 전송해주는 것. 그것을 transport layer가 해줘야한다는 뜻이 됩니다.
+
+
+
