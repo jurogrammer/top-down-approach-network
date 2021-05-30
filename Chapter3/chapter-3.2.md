@@ -6,7 +6,8 @@ we discuss transport-layer multiplexing and demultiplexing, that is, extending t
 
 넷트워크 레이어에 의해 전송된 패킷을 프로세스까지 배송을 연장시키는 방법이라고 합니다. 
 
-<img src="/Users/ju/Documents/top-down-approach-network/Chapter3/resources/3.2 extend~.jpeg" alt="3.2 extend~" style="zoom:50%;" />
+![3 2 extend~](https://user-images.githubusercontent.com/57349658/120091494-8e0cb100-c146-11eb-9140-8a1f7043a4cc.jpeg)
+
 
 위와 같은 이미지가 아닐까요? (추후 더 설명을 참고하시면 프로세스에 아래에 소켓이 그려져 있긴 해야 합니다.)
 
@@ -50,7 +51,8 @@ multiplexing, demultiplexing을 위해선 2가지 요건이 필요합니다.
 
 0 ~ 1023 번호까지는 well-known port numbers라 불리며,  RFC에 적힌 유명한 application service가 사용하죠. 따라서 어플 개발하실 땐 이 포트 번호는 피하시는 게 좋습니다. 전에 봤던 80번 -> 웹서버, 53번 -> DNS 서버 등 처럼요.
 
-<img src="/Users/ju/Documents/top-down-approach-network/Chapter3/resources/Figure 3.3 source and destination port-number fields in a transport-layer segment.png" alt="Figure 3.3 source and destination port-number fields in a transport-layer segment" style="zoom:50%;" />
+<img width="333" alt="Figure 3 3 source and destination port-number fields in a transport-layer segment" src="https://user-images.githubusercontent.com/57349658/120091497-9533bf00-c146-11eb-9c89-f5e0bbca2ac1.png">
+
 
 
 
